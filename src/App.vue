@@ -2,8 +2,8 @@
   <div class="container">
     <div class="index">
       <ul>
-        <li class="memo-list" v-for="memo in index()" :key="memo.id">
-          <a @click="edit(memo)"><li>{{ split(memo.body) }}</li></a>
+        <li class="memo-list" v-for="memo in getAllMemos()" :key="memo.id">
+          <a @click="edit(memo)"><li>{{ getFirstLine(memo.body) }}</li></a>
         </li>
       </ul>
       <button class="create-button" @click="create">+</button>
@@ -12,7 +12,7 @@
       <from v-if="show()">
         <textarea class="textarea" v-model="body"></textarea>
           <div>
-            <input class="edit-button" @click="update" type="submit" value="編集">
+            <input class="update-button" @click="update" type="submit" value="編集">
             <button class="destroy-button" @click="destroy">削除</button>
           </div>
       </from>
@@ -25,13 +25,13 @@ export default {
   name: 'App',
   data () {
     return {
-      id: -1,
+      id: '-1',
       body: ''
     }
   },
 
   methods: {
-    index () {
+    getAllMemos () {
       return Object.keys(localStorage).map(key => { return { id: key, body: localStorage.getItem(key) } })
     },
     $_new () {
@@ -43,7 +43,7 @@ export default {
       localStorage.setItem(this.id, this.body)
     },
     show () {
-      return this.id !== -1
+      return this.id !== '-1'
     },
     edit (params) {
       this.id = params.id
@@ -58,10 +58,10 @@ export default {
       this.$_clear()
     },
     $_clear () {
-      this.id = -1
+      this.id = '-1'
       this.body = ''
     },
-    split (text) {
+    getFirstLine (text) {
       return text.split(/\n/)[0]
     }
   }
@@ -82,7 +82,7 @@ export default {
  width: 500px;
 }
 
-.edit-button {
+.update-button {
  width: 410px;
  margin-right: 30px;
 }
