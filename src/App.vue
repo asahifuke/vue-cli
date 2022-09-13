@@ -40,7 +40,6 @@ export default {
     },
     create () {
       this.$_new()
-      localStorage.setItem(this.id, this.body)
     },
     show () {
       return this.id !== '-1'
