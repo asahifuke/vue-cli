@@ -12,7 +12,7 @@
       <from v-if="show()">
         <textarea class="textarea" v-model="body"></textarea>
           <div>
-            <input class="update-button" @click="update" type="submit" value="編集">
+            <input class="update-button" @click="update" type="submit" value="保存">
             <button class="destroy-button" @click="destroy">削除</button>
           </div>
       </from>
@@ -25,7 +25,7 @@ export default {
   name: 'App',
   data () {
     return {
-      id: '-1',
+      id: undefined,
       body: ''
     }
   },
@@ -35,14 +35,14 @@ export default {
       return Object.keys(localStorage).map(key => { return { id: key, body: localStorage.getItem(key) } })
     },
     $_new () {
-      this.id = new Date().getTime().toString()
+      this.id = new Date().getTime()
       this.body = '新規メモ'
     },
     create () {
       this.$_new()
     },
     show () {
-      return this.id !== '-1'
+      return this.id !== undefined
     },
     edit (params) {
       this.id = params.id
@@ -57,7 +57,7 @@ export default {
       this.$_clear()
     },
     $_clear () {
-      this.id = '-1'
+      this.id = undefined
       this.body = ''
     },
     getFirstLine (text) {
